@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Card } from 'react-bootstrap';
+import { Row, Col, Card, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 // import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { getProducts } from '../../actions/productAction';
@@ -34,21 +34,22 @@ class Products extends Component {
                         const { _id, prodName, prodURL, prodPrize} = product;
                         return (
                             <Col style={{ marginBottom: "2rem" }}>
-                                <Card key={_id} style={{ height: "100%", width: '15rem' }}>
+                                <Card  key={_id} style={{ height: "100%", width: '15rem' }}>
                                     <Card.Img variant="top" src={prodURL} style={{ height: '10rem' }} />
-                                    <Card.Body>
+                                    <Card.Body className="d-flex flex-column">
                                         <Card.Title style={{overflowInline:"hidden"}}>
                                             {/* <div className="textslide" style={{overflowInline:"hidden"}}>
                                                 {prodName}
                                             </div> */}
                                             {prodName}
                                         </Card.Title>
-                                        <Card.Text>
+                                        <Card.Text className="mt-auto mb-2" >
                                             {prodPrize}
                                         </Card.Text>
                                         {/* <Button variant="primary" onClick={(product)=> this.handleOnclick(product)} block>Chọn</Button> */}
                                         {/* <AddCartButton kiboi={'kydan'} product={product} /> */}
-                                        <ProtopModal product = {product}/>
+                                       {/* <Button >sad</Button> */}
+                                        <ProtopModal   product = {product}/>
                                     </Card.Body>
                                 </Card>
                             </Col>

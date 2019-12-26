@@ -58,7 +58,7 @@ class ProTopModal extends Component {
 
         return (
             <>
-                <Button block variant="outline-primary" onClick={() => this.handleShow()}>
+                <Button className="mt-auto" block variant="outline-primary" onClick={() => this.handleShow()}>
                     Đặt
                 </Button>
                 <Modal

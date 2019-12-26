@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap'
 import Login from '../auth/login'
 import Checkout from '../paypal/checkout';
 import CheckoutScreen from '../order/checkoutScreen';
+import {withRouter} from 'react-router-dom'
 export class checkoutButton extends Component {
     constructor(props) {
         super(props)
@@ -11,6 +12,10 @@ export class checkoutButton extends Component {
             showlogin: false,
             showcheckout: false,
         }
+    }
+    Redirect = () => {
+        const {history} = this.props;
+        if(history) history.push('/cart/checkout');
     }
     handleLoginKick = () => {
         this.setState({
@@ -29,8 +34,8 @@ export class checkoutButton extends Component {
             return (
                 <div>
                     <Button block variant="outline-success" 
-                    onClick={() => this.setState({showcheckout: true})}>Thanh toán</Button>
-                    <CheckoutScreen onClick={this.handleCheckoutKick} temp = {showcheckout} />
+                    onClick={() => this.Redirect()}>Thanh toán</Button>
+                    {/* <CheckoutScreen onClick={this.handleCheckoutKick} temp = {showcheckout} /> */}
                     {/* <Checkout /> */}
                 </div>
             )
@@ -56,4 +61,4 @@ const mapDispatchToProps = {
     
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(checkoutButton)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(checkoutButton)) 

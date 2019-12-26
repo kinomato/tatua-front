@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { returnErrors } from './errorAction';
-
+import { loadUserOrders } from './userAction';
 import {
     USER_LOADED,
     USER_LOADING,
@@ -32,10 +32,13 @@ export const loadUser = () => (dispatch, getState) => {
         config.headers['x-auth-token'] = token;
     }
     axios.get('/api/move/auth/user', config)
-        .then(res => dispatch({
-            type: USER_LOADED,
-            payload: res.data
-        }))
+        .then(res => {
+            dispatch({
+                type: USER_LOADED,
+                payload: res.data
+            })
+            dispatch(loadUserOrders(res.data.orders))
+        })
         .catch(err => {
             console.log(err);
             // dispatch(returnErrors(err.response.data, err.response.status));
@@ -46,35 +49,38 @@ export const loadUser = () => (dispatch, getState) => {
 }
 
 // register user
-export const register = ({ userName,userEmail,userPassword,userPhone }) => dispatch => {
+export const register = ({ userName, userEmail, userPassword, userPhone }) => dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
         }
     }
 
-    const body = JSON.stringify({ userName,userEmail,userPassword,userPhone });
+    const body = JSON.stringify({ userName, userEmail, userPassword, userPhone });
 
     axios.post('/api/move/user/register', body, config)
-    .then(res => dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data
-    }))
-    .catch(err => {
-        dispatch(returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL'));
-        dispatch({
-            type:REGISTER_FAIL
+        .then(res => {
+            dispatch({
+                type: REGISTER_SUCCESS,
+                payload: res.data
+            })
+            dispatch(loadUserOrders(res.data.user.orders))
         })
-        
-    })
+        .catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL'));
+            dispatch({
+                type: REGISTER_FAIL
+            })
+
+        })
 }
-export const logout = ()  => {
+export const logout = () => {
     return {
         type: LOGOUT_SUCCESS
     }
 }
 
-export const login = ({userEmail, userPassword}) => dispatch => {
+export const login = ({ userEmail, userPassword }) => dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -84,15 +90,18 @@ export const login = ({userEmail, userPassword}) => dispatch => {
     const body = JSON.stringify({ userEmail, userPassword });
 
     axios.post('/api/move/auth/login', body, config)
-    .then(res => dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data
-    }))
-    .catch(err => {
-        dispatch(returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL'));
-        dispatch({
-            type:LOGIN_FAIL
+        .then(res => {
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: res.data
+            })
+            dispatch(loadUserOrders(res.data.user.orders))
         })
-        
-    })
+        .catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL'));
+            dispatch({
+                type: LOGIN_FAIL
+            })
+
+        })
 }

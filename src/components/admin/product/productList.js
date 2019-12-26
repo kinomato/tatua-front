@@ -29,8 +29,7 @@ export class ProductList extends Component {
                 { title: 'Status', field: 'isDeleted' }
 
             ],
-            data: [],
-            _id: ''
+            data: []
         }
     }
 
@@ -62,13 +61,14 @@ export class ProductList extends Component {
                 console.log(this.state.columns)
                 console.log(this.state.data)
             })
-        
 
     }
     render() {
         const { data } = this.state;
-        
-        // console.log(_id)
+        const _id = data.map(product => {
+            const{_id} = product;
+        })
+        console.log(_id)
         if (data.length > 0) {
             return (
                 <div>
@@ -85,32 +85,12 @@ export class ProductList extends Component {
                                     icon: 'update',
                                     tooltip: 'Update Product',
                                     handleAdd: (event, rowData) => {
-                                        this.setState({
-                                            _id: rowData._id
-                                        })
+                                        console.log(event)
                                     },
                                     handleUpdate: (event, rowData) => {
-                                        console.log(rowData)
-                                        console.log(rowData._id)
-                                        
+                                        console.log(event)
                                     },
-                                    handleDelete: (event, rowData) => {
-                                        this.props.deleteProduct(rowData._id)
-                                        console.log(rowData)
-                                        if (rowData.isDeleted === "Good") {
-                                            rowData.isDeleted = "Deleted"
-                                            this.setState({
-                                                isDeleted: rowData.isDeleted
-                                            })
-                                        }
-                                        else {
-                                            rowData.isDeleted = "Good"
-                                            this.setState({
-                                                isDeleted: rowData.isDeleted
-                                            })
-                                        }
-
-                                    }
+                                    handleDelete: (event, rowData) => alert("You deleted " + rowData.name)
                                 }
                             ]}
                             components={{
@@ -122,7 +102,7 @@ export class ProductList extends Component {
                                             variant="contained"
 
                                             size="small">
-                                            <Link to={`/admin/products/${this.state._id}`} style={{ textTransform: 'none', color: 'green' }}>
+                                            <Link to={`/admin/products/${_id}`} style={{ textTransform: 'none', color: 'green' }}>
                                                 <DetailsIcon />
                                             </Link>
                                         </IconButton>
@@ -133,7 +113,7 @@ export class ProductList extends Component {
                                             style={{ textTransform: 'none', color: 'blue' }}
                                             size="small"
                                         >
-                                            <Link to={`/admin/products/editProduct/${this.state._id}`}><UpdateRoundedIcon /></Link>
+                                            <Link to={'/admin/products/editProduct'}><UpdateRoundedIcon /></Link>
 
                                         </IconButton>
                                         <IconButton
@@ -242,7 +222,6 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = {
     getProducts,
-    updateProduct,
-    deleteProduct
+    updateProduct
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ProductList)

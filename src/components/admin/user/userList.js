@@ -21,15 +21,14 @@ export class UserList extends Component {
         super(props)
         this.state = {
             columns: [
-                { title: 'ID', field: '_id' },
+                // { title: 'ID', field: '_id' },
                 { title: 'User Name', field: 'userName' },
                 { title: 'Address', field: 'userAddress' },
-                // { title: 'Gender', field: 'userGender' },
+                { title: 'Gender', field: 'userGender' },
                 { title: 'Email', field: 'userEmail' },
                 { title: 'Phone', field: 'userPhone' }
             ],
             data: [],
-            _id: ''
         }
     }
 
@@ -47,10 +46,9 @@ export class UserList extends Component {
                 let newUsers = [];
                 users.forEach(user => {
                     const newUser = {
-                        _id: user._id,
                         userName: user.userName,
                         userAddress: user.userAddress,
-                        // userGender: user.userGender,
+                        userGender: user.userGender,
                         userEmail: user.userEmail,
                         userPhone: user.userPhone
                     }
@@ -153,14 +151,11 @@ export class UserList extends Component {
                                     icon: 'update',
                                     tooltip: 'Update User',
                                     handleAdd: (event, rowData) => {
-                                        this.setState({
-                                            _id: rowData._id
-                                        })
-
+                                        console.log(event)
                                     },
-                                    // handleUpdate: (event, rowData) => {
-                                    //     console.log(event)
-                                    // },
+                                    handleUpdate: (event, rowData) => {
+                                        console.log(event)
+                                    },
                                     handleDelete: (event, rowData) => alert("You deleted " + rowData.name)
                                 }
                             ]}
@@ -171,13 +166,10 @@ export class UserList extends Component {
                                             onClick={(event) => props.action.handleAdd(event, props.data)}
                                             color="primary"
                                             variant="contained"
-                                            
+                                            style={{ textTransform: 'none', color: 'green' }}
                                             size="small"
                                         >
-                                            <Link to={`/admin/users/${this.state._id}`}>
-                                                <DetailsIcon style={{ textTransform: 'none', color: 'green' }} />
-                                            </Link>
-
+                                            <DetailsIcon />
                                         </IconButton>
                                         <IconButton
                                             onClick={(event) => props.action.handleUpdate(event, props.data)}
@@ -189,7 +181,7 @@ export class UserList extends Component {
                                             <Link to={''}><UpdateRoundedIcon /></Link>
 
                                         </IconButton>
-                                        {/* <IconButton
+                                        <IconButton
                                             onClick={(event) => props.action.handleDelete(event, props.data)}
                                             color="primary"
                                             variant="contained"
@@ -197,7 +189,7 @@ export class UserList extends Component {
                                             size="small"
                                         >
                                             <HighlightOffIcon />
-                                        </IconButton> */}
+                                        </IconButton>
                                     </>
 
                                 )

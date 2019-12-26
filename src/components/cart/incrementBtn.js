@@ -16,7 +16,7 @@ export class IncrementBtn extends Component {
         
         return (
             <IconContext.Provider value={{ color: "blue" }}>
-                <div>
+                <div style={{cursor: 'pointer'}}>
                     <IoIosAddCircleOutline onClick={() => this.handleClick()} />
                 </div>
             </IconContext.Provider>

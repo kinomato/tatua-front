@@ -6,7 +6,7 @@ export default class InfoUmbreon extends Component {
         return (
             <div>
                 <Jumbotron>
-                    <h1>Welcome to my Umbreon Store</h1>
+                    <h1>Welcome to Umbreon</h1>
                     <p>
                         The best store tea milk in the world. Tastes will make you feel flying to the heaven
                         You can't irresitible. Serving you is my pleasure!!!!

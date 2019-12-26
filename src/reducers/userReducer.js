@@ -10,17 +10,26 @@ import {
     GET_USER,
     GET_USER_FAIL,
     GET_USERS_FAIL,
-    GET_USERS_COUNT
+    GET_USERS_COUNT,
+    SAVE_ORDER,
+    SAVE_ORDER_FAIL,
+    LOAD_USER_ORDERS
 } from '../actions/types';
 
 const initialState = {
     users: [],
     userCT: null,
     loading: false,
-    count: 0
+    count: 0,
+    userOrders:[]
 }
 export default function (state = initialState, action) {
     switch (action.type) {
+        case LOAD_USER_ORDERS:
+            return {
+                ...state,
+                userOrders: [...action.payload]
+            }
         case GET_USERS_COUNT:
             return {
                 ...state,
@@ -56,6 +65,15 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 loading: true
+            }
+        case SAVE_ORDER:
+            return {
+                ...state,
+                // userOrders:[...state.userOrders,action.payload]
+            }
+        case SAVE_ORDER_FAIL:
+            return {
+                ...state
             }
         case GET_USERS_FAIL:
         case UPDATE_USER_FAIL:

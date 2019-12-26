@@ -16,7 +16,7 @@ export class DecrementBtn extends Component {
     render() {
         return (
             <IconContext.Provider value={{ color: "red" }}>
-                <div>
+                <div style={{cursor: 'pointer'}}>
                     <AiOutlineMinusCircle onClick={() => this.handleClick()} />
                 </div>
             </IconContext.Provider>

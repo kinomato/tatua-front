@@ -3,6 +3,8 @@ import './App.css';
 import { Provider } from 'react-redux';
 import store from './store';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import NavigationBar from './components/navbar';
 // import PrivateRoute from './components/privateRoute';
@@ -33,15 +35,17 @@ class App extends Component {
   }
   render() {
     return (
+      
       <Provider store={store}>
         <div className="App">
-          <NavigationBar />
           
+          <NavigationBar />
+          <ToastContainer />
           <Container fluid={true} style={{ marginTop: "1rem" }}>
             <Switch>
               <Redirect exact from="/" to="/home" />
               <Route path="/home" component={MainContent} />
-              <Route path="/admin/products/editProduct/:id" component={EditProduct} /> 
+              <Route path="/admin/products/editProduct" component={EditProduct} /> 
               <Route path="/admin/products/:id" component={ProductDetail}></Route>                
               <Route path="/admin/products" component={ProductList} />          
               {/* <Route path="/test/shoppinglist" component={ShoppingList} /> */}
@@ -52,7 +56,7 @@ class App extends Component {
               <Route path="/admin/toppings/:id" component={ToppingDetail}></Route>
               <Route path="/admin/toppings" component={ToppingList}></Route>
               <Route path="/admin/promos" component={PromoList}></Route>
-             
+              <UserRoute path="/cart/checkout"  component={CheckoutScreenKai}/>
               <UserRoute path="/account" component={Usercontent} />
               {/* <PrivateRoute path="/admin/orders/:id" component={OrderDetail}/>
               <PrivateRoute path="/admin/orders" component={Order}/>

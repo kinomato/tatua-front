@@ -77,7 +77,7 @@ export class CheckoutScreen extends Component {
                     </Modal.Body>
 
                     <Modal.Footer>
-                        {/* <Checkout /> */}
+                        <Checkout />
                         <Checkoutv2/>
                     </Modal.Footer>
                 </Modal>
