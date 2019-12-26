@@ -44,7 +44,7 @@ class App extends Component {
           <Container fluid={true} style={{ marginTop: "1rem" }}>
             <Switch>
               <Redirect exact from="/" to="/home" />
-              <Route path="/home" component={MainContent} />
+              <Route exact path="/home" component={MainContent} />
               <Route path="/admin/products/editProduct" component={EditProduct} /> 
               <Route path="/admin/products/:id" component={ProductDetail}></Route>                
               <Route path="/admin/products" component={ProductList} />          

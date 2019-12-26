@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Button, Badge, ListGroup, Modal, Form, Image, Container, Row, Col,Spinner } from 'react-bootstrap'
+import { Button, Badge, ListGroup, Modal, Form, Image, Container, Row, Col, Spinner } from 'react-bootstrap'
 import Checkout from '../paypal/checkout';
 import IncrementBtn from '../cart/incrementBtn';
 import DecrementBtn from '../cart/decrementBtn';
@@ -32,19 +32,29 @@ export class CheckoutScreenKai extends Component {
 
                                     </div>
                                     <hr />
-                                    
-                                        {user ? (
+
+                                    {user ? (
+                                        <>
                                             <div className="mr-3 ml-3 d-flex flex-row justify-content-between">
-                                            <p>{user.userName ? user.userName:'yolo'}</p>
-                                             <p>{user.userEmail ? user.userEmail: 'email'}</p>
-                                             </div>
-                                             
-                                        ):<Spinner animation="border" role="status">
-                                        <span className="sr-only">Loading...</span>
-                                      </Spinner>}
-                                        {/* <p>{user.userName ? user.userName:'yolo'}</p>
+                                                <p>Name:</p>
+                                                <p>{user.userName ? user.userName : 'name'}</p>
+                                            </div>
+                                            <div className="mr-3 ml-3 d-flex flex-row justify-content-between">
+                                                <p>Email:</p>
+                                                <p>{user.userEmail ? user.userEmail : 'email'}</p>
+                                            </div>
+                                            <div className="mr-3 ml-3 d-flex flex-row justify-content-between">
+                                                <p>Phone:</p>
+                                                <p>{user.userPhone ? user.userPhone  : 'phone'}</p>
+                                            </div></>
+
+
+                                    ) : <Spinner animation="border" role="status">
+                                            <span className="sr-only">Loading...</span>
+                                        </Spinner>}
+                                    {/* <p>{user.userName ? user.userName:'yolo'}</p>
                                         <p>{user.userEmail ? user.userEmail: 'email'}</p> */}
-                                    
+
                                 </Col>
                             </Row>
                             <Row>

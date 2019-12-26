@@ -26,6 +26,9 @@ export class Checkoutv2 extends Component {
                         const orderData = {
                             userId: user._id,
                             items: [...cart],
+                            name: user.userName,
+                            email: user.userEmail,
+                            phone: user.userPhone,
                             prizeOrigin: tongtien,
                             prizeWithPromo:tongtien,
                             create_time:details.create_time
