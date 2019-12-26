@@ -63,10 +63,10 @@ class NavigationBar extends Component {
                         title={user ? `Welcome ${user.userName}` : ''}
                         id="basic-nav-dropdown">
                         <NavDropdown.Item>
-                            <Link to='/account'>Thông tin cá nhân</Link>
+                            <Link to='/account/profile'>Thông tin cá nhân</Link>
                         </NavDropdown.Item>
                         <NavDropdown.Item>
-                            <Link to='/'>Lịch sử giao dịch</Link>
+                            <Link to='/account/history'>Lịch sử giao dịch</Link>
                         </NavDropdown.Item>
                         {/* <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item> */}
                         <NavDropdown.Divider />

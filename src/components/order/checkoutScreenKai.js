@@ -84,12 +84,10 @@ export class CheckoutScreenKai extends Component {
                                             {/* eslint-disable-next-line array-callback-return */}
                                             {cart.map(item => {
                                                 return (<ListGroup.Item>
-
                                                     <div className="d-flex flex-row justify-content-between">
                                                         <div >
                                                             <Image style={{ height: "5rem", width: "6rem" }} src={item.product.prodURL} thumbnail />
                                                         </div>
-
                                                         <div className="d-flex flex-column">
                                                             <small><strong>
                                                                 {item.product.prodName}
@@ -105,7 +103,6 @@ export class CheckoutScreenKai extends Component {
                                                             ))}
                                                             {/* <div className="d-flex flex-row">
                                                                 
-        
                                                             </div> */}
                                                         </div>
                                                         <div className="d-flex flex-column">
@@ -117,17 +114,11 @@ export class CheckoutScreenKai extends Component {
                                                         {/* <div className="align-self-center">
                                                             <DeleteCartButton id={item.id} />
                                                         </div> */}
-
                                                         {/* <Button variant="danger" onClick={() => this.props.deleteCartItem(item.id)}>x</Button> */}
                                                     </div>
-
-
                                                 </ListGroup.Item>)
                                             })}
                                         </div>
-
-
-
                                     </ListGroup>
                                 </Col>
                             </Row>

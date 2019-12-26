@@ -93,12 +93,25 @@ export const updateUser = (id) => (dispatch) => {
             })
         })
 }
-// export const loadUserOrders = (orders) => async dispatch => {
-//     dispatch({
-//         type:LOAD_USER_ORDERS,
-//         payload: orders
-//     })
-// }
+export const loadUserOrders = (uid) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const body = JSON.stringify({uid});
+    axios.post(`${url_local || url_host}/api/move/order/userorder`,body,config)
+        .then(res => {
+            dispatch({
+                type:LOAD_USER_ORDERS,
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    
+}
 export const saveOrder =  (orderData,uid) => async dispatch => {
     const config = {
         headers: {
