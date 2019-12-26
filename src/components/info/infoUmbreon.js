@@ -5,7 +5,7 @@ export default class InfoUmbreon extends Component {
     render() {
         return (
             <div>
-                <Jumbotron>
+                <Jumbotron style={{height:'30rem'}}>
                     <h1>Welcome to Umbreon</h1>
                     <p>
                         The best store tea milk in the world. Tastes will make you feel flying to the heaven

@@ -35,7 +35,7 @@ class Products extends Component {
                         return (
                             <Col style={{ marginBottom: "2rem" }}>
                                 <Card  key={_id} style={{ height: "100%", width: '15rem' }}>
-                                    <Card.Img variant="top" src={prodURL} style={{ height: '10rem' }} />
+                                    <Card.Img variant="top" src={prodURL} style={{ height: '15rem' }} />
                                     <Card.Body className="d-flex flex-column">
                                         <Card.Title style={{overflowInline:"hidden"}}>
                                             {/* <div className="textslide" style={{overflowInline:"hidden"}}>

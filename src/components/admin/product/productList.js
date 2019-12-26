@@ -29,7 +29,8 @@ export class ProductList extends Component {
                 { title: 'Status', field: 'isDeleted' }
 
             ],
-            data: []
+            data: [],
+            _id:''
         }
     }
 
@@ -65,10 +66,7 @@ export class ProductList extends Component {
     }
     render() {
         const { data } = this.state;
-        const _id = data.map(product => {
-            const{_id} = product;
-        })
-        console.log(_id)
+        
         if (data.length > 0) {
             return (
                 <div>
@@ -90,7 +88,12 @@ export class ProductList extends Component {
                                     handleUpdate: (event, rowData) => {
                                         console.log(event)
                                     },
-                                    handleDelete: (event, rowData) => alert("You deleted " + rowData.name)
+                                    handleDelete: (event, rowData) => {
+                                        this.setState({
+                                            _id: rowData._id
+                                        })
+                                        
+                                    }
                                 }
                             ]}
                             components={{
@@ -102,7 +105,7 @@ export class ProductList extends Component {
                                             variant="contained"
 
                                             size="small">
-                                            <Link to={`/admin/products/${_id}`} style={{ textTransform: 'none', color: 'green' }}>
+                                            <Link to={`/admin/products/${this.state._id}`} style={{ textTransform: 'none', color: 'green' }}>
                                                 <DetailsIcon />
                                             </Link>
                                         </IconButton>
