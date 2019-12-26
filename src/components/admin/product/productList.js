@@ -30,7 +30,8 @@ export class ProductList extends Component {
 
             ],
             data: [],
-            _id:''
+            _id: '',
+            updateID:''
         }
     }
 
@@ -63,10 +64,12 @@ export class ProductList extends Component {
                 console.log(this.state.data)
             })
 
+
     }
     render() {
         const { data } = this.state;
-        
+
+        // console.log(_id)
         if (data.length > 0) {
             return (
                 <div>
@@ -83,10 +86,18 @@ export class ProductList extends Component {
                                     icon: 'update',
                                     tooltip: 'Update Product',
                                     handleAdd: (event, rowData) => {
-                                        console.log(event)
+                                        console.log(rowData._id)
+                                        this.setState({
+                                            _id: rowData._id
+                                        })
+                                        console.log(this.state._id)
                                     },
                                     handleUpdate: (event, rowData) => {
-                                        console.log(event)
+                                        console.log(rowData._id)
+                                        this.setState({
+                                            updateID: rowData._id
+                                        })
+                                        console.log(this.state.updateID)
                                     },
                                     handleDelete: (event, rowData) => {
                                         this.props.deleteProduct(rowData._id)
@@ -103,7 +114,7 @@ export class ProductList extends Component {
                                                 isDeleted: rowData.isDeleted
                                             })
                                         }
-                                        
+
                                     }
                                 }
                             ]}
@@ -127,7 +138,7 @@ export class ProductList extends Component {
                                             style={{ textTransform: 'none', color: 'blue' }}
                                             size="small"
                                         >
-                                            <Link to={'/admin/products/editProduct'}><UpdateRoundedIcon /></Link>
+                                            <Link to={`/admin/products/editProduct/${this.state._id}`}><UpdateRoundedIcon /></Link>
 
                                         </IconButton>
                                         <IconButton
@@ -236,6 +247,7 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = {
     getProducts,
-    updateProduct
+    updateProduct,
+    deleteProduct
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ProductList)
