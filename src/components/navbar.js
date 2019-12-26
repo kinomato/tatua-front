@@ -44,6 +44,9 @@ class NavigationBar extends Component {
                     <NavDropdown.Item>
                         <Link to={'/admin/promos'} style={{textDecoration:'none',color:'black'}}>Manage promo</Link>
                     </NavDropdown.Item>
+                    <NavDropdown.Item>
+                        <Link to={'/admin/orders'} style={{textDecoration:'none',color:'black'}}>Manage order</Link>
+                    </NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item >
                         About

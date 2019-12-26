@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { Container, Row, Col, Button } from 'react-bootstrap'
+import { Container, Row, Col } from 'react-bootstrap'
 import { BeatLoader } from 'react-spinners';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -15,19 +15,20 @@ import UpdateRoundedIcon from '@material-ui/icons/UpdateRounded';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import GoBackBtn from '../../goBackBtn';
 
-import ProductDetail2 from './productDetails2'
+ import OrderDetail from './orderDetail'
 
-import { getProducts, updateProduct, deleteProduct } from '../../../actions/productAction';
+import { getOrders,deleteOrder } from '../../../actions/orderAction';
 import Swal from 'sweetalert2'
-export class ProductList extends Component {
+export class OrderList extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
             columns: [
                 { title: 'ID', field: '_id' },
-                { title: 'Product Name', field: 'prodName' },
-                { title: 'Product Prize', field: 'prodPrize' },
+                { title: 'Create time', field: 'create_time' },
+                { title: 'Email', field: 'email' },
+                { title: 'Total Price', field: 'prizeWithPromo' },
                 { title: 'Status', field: 'isDeleted' }
 
             ],
@@ -36,37 +37,40 @@ export class ProductList extends Component {
     }
 
     static propTypes = {
-        products: PropTypes.array.isRequired,
-        getProducts: PropTypes.func.isRequired,
-        deleteProduct: PropTypes.func.isRequired,
-        updateProduct: PropTypes.func.isRequired,
+        orders: PropTypes.array.isRequired,
+        getOrders: PropTypes.func.isRequired,
         loading: PropTypes.bool.isRequired,
         error: PropTypes.object.isRequired
     }
-    async fetchProduct(){
-        await this.props.getProducts()
-        .then(() => {
-            const { products } = this.props;
-            let newProds = [];
-            products.forEach(product => {
-                const newProd = {
-                    _id: product._id,
-                    prodName: product.prodName,
-                    prodPrize: product.prodPrize,
-                    prodURL: product.prodURL,
-                    isDeleted: product.isDeleted ? 'Deleted' : 'Good'
-                }
-                newProds = [...newProds, newProd];
-            });
-            this.setState({
-                data: newProds
+    async fetchOrder(){
+        await this.props.getOrders()
+            .then(() => {
+                const { orders } = this.props;
+                let newProds = [];
+                orders.forEach(order => {
+                    const newProd = {
+                        _id: order._id,
+                        userId: order.userId,
+                        name: order.name,
+                        email: order.email,
+                        phone: order.phone,
+                        prizeOrigin: order.prizeOrigin,
+                        prizeWithPromo: "$" + order.prizeWithPromo,
+                        create_time: order.create_time,
+                        isDeleted: order.isDeleted ? 'Deleted' : 'Good',
+                        items: order.items
+                    }
+                    newProds = [...newProds, newProd];
+                });
+                this.setState({
+                    data: newProds
+                })
+                console.log(this.state.columns)
+                console.log(this.state.data)
             })
-            //console.log(this.state.columns)
-            //console.log(this.state.data)
-        })
     }
     componentDidMount() {
-        this.fetchProduct();
+        this.fetchOrder()
 
     }
     render() {
@@ -81,10 +85,9 @@ export class ProductList extends Component {
                     <Row>
                         <GoBackBtn></GoBackBtn>
                     </Row>
-                    <Button variant="info">reload</Button>
                     <Grow in={true}>
                         <MaterialTable style={{ marginTop: '5vh' }}
-                            title="LIST PRODUCT"
+                            title="LIST ORDER"
                             columns={this.state.columns}
                             data={this.state.data}
                             actions={[
@@ -98,10 +101,9 @@ export class ProductList extends Component {
                                         console.log(event)
                                     },
                                     handleDelete: (event, rowData) => {
-                                        //alert("You deleted " + rowData.name)
-                                        this.props.deleteProduct(rowData._id)
+                                        this.props.deleteOrder(rowData._id)
                                             .then(() => {
-                                                this.fetchProduct()
+                                                this.fetchOrder()
                                                 Swal.fire(
                                                     'Success!',
                                                     'deleted',
@@ -114,17 +116,8 @@ export class ProductList extends Component {
                             components={{
                                 Action: props => (
                                     <>
-                                        {/* <IconButton
-                                            onClick={(event) => props.action.handleAdd(event, props.data)}
-                                            color="primary"
-                                            variant="contained"
 
-                                            size="small">
-                                            <Link to={`/admin/products/${props.data._id}`} style={{ textTransform: 'none', color: 'green' }}>
-                                                <DetailsIcon />
-                                            </Link>
-                                        </IconButton> */}
-                                        <ProductDetail2 productCT={props.data} />
+                                        <OrderDetail orderCT={props.data} />
                                         <IconButton
                                             onClick={(event) => props.action.handleUpdate(event, props.data)}
                                             color="primary"
@@ -171,77 +164,16 @@ export class ProductList extends Component {
                 </Container>
             )
         }
-        // const loading = (
-        //     <Fragment>
-        //         <td colSpan='5' align='center'>
-        //             <BeatLoader color="#50E3C2" animation="border" role="status" style={{ height: '10vh', width: '10vh' }} >
-        //                 <span className="sr-only"><strong style={{ fontSize: '5vh' }}>Loading...</strong></span>
-        //             </BeatLoader>
-        //         </td>
-        //     </Fragment>
-        // )
-        // const loaded = (
-        //     <Fragment>
-        //         {products !== null ? products.map(product => {
-        //             const { _id, prodName, prodPrize, isDeleted } = product;
 
-        //             return (
-        //                 <tr key={_id}>
-        //                     {/* <td>{1}</td>
-        //                     <td>{_id}</td> */}
-        //                     <td>{prodName}</td>
-        //                     <td>{prodPrize}</td>
-        //                     <td>{isDeleted ? 'Unvailable' : 'Available'}</td>
-
-        //                     <td>
-        //                         <ButtonGroup aria-label="Basic example">
-        //                             <Button variant="secondary">
-        //                                 <Link to={`/admin/products/${_id}`} style={{ textDecoration: 'none', color: 'white' }}>
-        //                                     Detail
-        //                                 </Link>
-        //                             </Button>
-        //                             <Button variant="danger" onClick={()=>deleteProduct()}>Del</Button>
-        //                             <Button variant="primary" onClick="handlUpdate">Update</Button>
-        //                         </ButtonGroup>
-        //                     </td>
-
-        //                 </tr>
-        //             )
-        //         }) : null}
-        //     </Fragment>
-        // return (
-        //     <Container>
-        //         <div className="row">
-        //             <Table striped bordered hover variant="dark">
-        //                 <thead>
-        //                     <tr>
-        //                         <th>Product Name</th>
-        //                         <th>Product prize (VND)</th>
-        //                         <th>Status</th>
-        //                     </tr>
-        //                 </thead>
-        //                 <tbody>
-        //                     {!this.props.loading ? loaded : loading}
-        //                 </tbody>
-        //             </Table>
-
-        //         </div>
-        //         <div className="row">
-
-        //         </div>
-        //     </Container>
-
-        // )
     }
 }
 const mapStateToProps = state => ({
-    products: state.product.products,
-    loading: state.product.loading,
+    orders: state.order.orders,
+    loading: state.order.loading,
     error: state.error
 })
 const mapDispatchToProps = {
-    getProducts,
-    updateProduct,
-    deleteProduct
+    getOrders,
+    deleteOrder
 }
-export default connect(mapStateToProps, mapDispatchToProps)(ProductList)
+export default connect(mapStateToProps, mapDispatchToProps)(OrderList)

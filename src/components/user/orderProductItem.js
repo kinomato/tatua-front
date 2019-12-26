@@ -16,13 +16,14 @@ const OrderProductItem = (props) => {
                         <small>{topp.toppName}-</small>
                     ))}
                 </div>
-                <div className="d-flex flex-row">
+                <div className="d-flex flex-column justify-content-around">
                     {/* <IncrementBtn id={item.id} /> */}
-                    <small>total:</small>
-                    <small>{item.sl}</small>
+                    <p>${item.tongtien}</p>
+                <small>total: {item.sl}</small>
+                    
                     {/* <DecrementBtn id={item.id} /> */}
                 </div>
-                <p>${item.tongtien}</p>
+                
             </div>
         </ListGroup.Item>
     )

@@ -8,6 +8,7 @@ export class History extends Component {
         prop: PropTypes
     }
     componentDidMount(){
+        console.log("fuck")
         this.props.loadUserOrders(this.props.user._id);
     }
     render() {

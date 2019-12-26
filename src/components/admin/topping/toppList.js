@@ -4,7 +4,7 @@ import { BeatLoader } from 'react-spinners';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+import ToppDetails2 from './toppDetails2'
 
 
 // import MaterialTable from '@material-ui/core/Table';
@@ -17,8 +17,8 @@ import UpdateRoundedIcon from '@material-ui/icons/UpdateRounded';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import GoBackBtn from '../../goBackBtn';
 
-import { getToppings } from '../../../actions/toppingAction'
-
+import { getToppings,deleteTopping } from '../../../actions/toppingAction'
+import Swal from 'sweetalert2'
 export class ToppingList extends Component {
     constructor(props) {
         super(props)
@@ -39,7 +39,7 @@ export class ToppingList extends Component {
         loading: PropTypes.bool.isRequired,
         error: PropTypes.object.isRequired
     }
-    async componentDidMount() {
+    async fetchTopp(){
         await this.props.getToppings()
             .then(() => {
                 const { topps } = this.props;
@@ -60,6 +60,9 @@ export class ToppingList extends Component {
                 console.log(this.state.columns)
                 console.log(this.state.data)
             })
+    }
+    componentDidMount() {
+        this.fetchTopp()
     }
 
     render() {
@@ -86,24 +89,35 @@ export class ToppingList extends Component {
                                     handleUpdate: (event, rowData) => {
                                         console.log(event)
                                     },
-                                    handleDelete: (event, rowData) => alert("You deleted " + rowData.name)
+                                    handleDelete: (event, rowData) => {
+                                        this.props.deleteTopping(rowData._id)
+                                        .then(() => {
+                                            this.fetchTopp()
+                                            Swal.fire(
+                                                'Success!',
+                                                'deleted',
+                                                'success'
+                                            )
+                                        })
+                                    }
                                 }
                             ]}
                             components={{
                                 Action: props => (
                                     <>
-                                        <IconButton
+                                        {/* <IconButton
                                             onClick={(event) => props.action.handleAdd(event, props.data)}
                                             color="primary"
                                             variant="contained"
                                             style={{ textTransform: 'none', color: 'green' }}
                                             size="small"
                                         >
-                                            <Link to={`/admin/toppings/${data._id}`}>
+                                            <Link to={`/admin/toppings/${props.data._id}`}>
                                                 <DetailsIcon />
                                             </Link>
 
-                                        </IconButton>
+                                        </IconButton> */}
+                                        <ToppDetails2 toppCT={props.data}/>
                                         <IconButton
                                             onClick={(event) => props.action.handleUpdate(event, props.data)}
                                             color="primary"
@@ -159,6 +173,7 @@ const mapStateToProps = state => ({
     error: state.error
 })
 const mapDispatchToProps = {
-    getToppings
+    getToppings,
+    deleteTopping
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ToppingList)

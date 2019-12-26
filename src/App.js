@@ -27,7 +27,7 @@ import ToppingDetail from './components/admin/topping/toppDetail';
 import ProductDetail from './components/admin/product/productDetail';
 import EditProduct from './components/admin/product/editProduct';
 import UserDetail from './components/admin/user/userDetail';
-
+import OrderList from './components/admin/order/orderList'
 class App extends Component {
   componentDidMount() {
     store.dispatch(loadUser());
@@ -56,6 +56,7 @@ class App extends Component {
               <Route path="/admin/toppings/:id" component={ToppingDetail}></Route>
               <Route path="/admin/toppings" component={ToppingList}></Route>
               <Route path="/admin/promos" component={PromoList}></Route>
+              <Route path="/admin/orders" component={OrderList}></Route>
               <UserRoute path="/cart/checkout"  component={CheckoutScreenKai}/>
               <UserRoute path="/account" component={Usercontent} />
               {/* <PrivateRoute path="/admin/orders/:id" component={OrderDetail}/>

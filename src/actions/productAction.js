@@ -81,20 +81,30 @@ export const updateProduct = (id) => (dispatch) => {
         })
 }
 export const deleteProduct = (id) => (dispatch) => {
-    axios.put(`${url_local || url_host}/api/move/product/delete/${id}`)
+    return new Promise((resolve,reject) => {
+        axios.put(`${url_local || url_host}/api/move/product/delete/${id}`)
         .then(res => {
             console.log(res);
             dispatch({
                 type: DELETE_PRODUCT,
                 payload: res.data
             });
+            resolve()
         })
         .catch(err => {
-            dispatch(returnErrors(err.response.data, err.response.status, 'UPDATE_PRODUCT_FAIL'))
+            try {
+                dispatch(returnErrors(err.response.data, err.response.status, 'UPDATE_PRODUCT_FAIL'))
+            } catch (error) {
+                dispatch(returnErrors(err,null, 'UPDATE_PRODUCT_FAIL'))
+            }
+            
             dispatch({
                 type: DELETE_PRODUCT_FAIL
             })
+            reject()
         })
+    })
+    
 }
 
 export const setOrderLoading = () => {

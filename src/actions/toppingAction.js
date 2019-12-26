@@ -9,10 +9,38 @@ import {
     REMOVE_CART_TOPP,
     CLEAR_CART_TOPPS,
     CALCULATE_TONGTIEN_TOPP,
-    ADD_TOPPING
+    ADD_TOPPING,
+    DELETE_TOPPING,
+    DELETE_TOPPING_FAIL
 } from '../actions/types';
 const url_local = process.env.REACT_APP_LOCAL_URL
 const url_host = process.env.REACT_APP_HOST_URL
+export const deleteTopping = (id) => (dispatch) => {
+    return new Promise((resolve,reject) => {
+        axios.put(`${url_local || url_host}/api/move/topp/delete/${id}`)
+        .then(res => {
+            console.log(res);
+            dispatch({
+                type: DELETE_TOPPING,
+                payload: res.data
+            });
+            resolve()
+        })
+        .catch(err => {
+            try {
+                dispatch(returnErrors(err.response.data, err.response.status, 'DELETE_TOPPING_FAIL'))
+            } catch (error) {
+                dispatch(returnErrors(err,null, 'DELETE_TOPPING_FAIL'))
+            }
+            
+            dispatch({
+                type: DELETE_TOPPING_FAIL
+            })
+            reject()
+        })
+    })
+    
+}
 export const getToppings = () => (dispatch) => {
     return new Promise((resolve, reject) => {
         dispatch(setToppLoading());

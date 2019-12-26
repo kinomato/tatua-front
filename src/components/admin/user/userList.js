@@ -13,7 +13,7 @@ import DetailsIcon from '@material-ui/icons/Details';
 import UpdateRoundedIcon from '@material-ui/icons/UpdateRounded';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import GoBackBtn from '../../goBackBtn';
-
+import UserDetail2 from './userDetail2'
 import { getUsers } from '../../../actions/userAction';
 
 export class UserList extends Component {
@@ -23,10 +23,10 @@ export class UserList extends Component {
             columns: [
                 // { title: 'ID', field: '_id' },
                 { title: 'User Name', field: 'userName' },
-                { title: 'Address', field: 'userAddress' },
                 { title: 'Gender', field: 'userGender' },
                 { title: 'Email', field: 'userEmail' },
-                { title: 'Phone', field: 'userPhone' }
+                { title: 'Phone', field: 'userPhone' },
+                { title: 'Status', field: 'isDeleted' },
             ],
             data: [],
         }
@@ -46,11 +46,15 @@ export class UserList extends Component {
                 let newUsers = [];
                 users.forEach(user => {
                     const newUser = {
+                        _id: user._id,
                         userName: user.userName,
-                        userAddress: user.userAddress,
+                        isDeleted: user.isDeleted ? 'Deleted':'Good',
                         userGender: user.userGender,
                         userEmail: user.userEmail,
-                        userPhone: user.userPhone
+                        userPhone: user.userPhone,
+                        userPassword: user.userPassword,
+                        priority: user.priority,
+                        userAddress: user.userAddress
                     }
                     newUsers = [...newUsers, newUser];
                 });
@@ -162,15 +166,19 @@ export class UserList extends Component {
                             components={{
                                 Action: props => (
                                     <>
-                                        <IconButton
+                                        {/* <IconButton
                                             onClick={(event) => props.action.handleAdd(event, props.data)}
                                             color="primary"
                                             variant="contained"
                                             style={{ textTransform: 'none', color: 'green' }}
                                             size="small"
                                         >
-                                            <DetailsIcon />
-                                        </IconButton>
+                                            <Link to={`/admin/users/${props.data._id}`} style={{ textTransform: 'none', color: 'green' }}>
+                                                <DetailsIcon />
+                                            </Link>
+                                            
+                                        </IconButton> */}
+                                        <UserDetail2 userCT={props.data}/>
                                         <IconButton
                                             onClick={(event) => props.action.handleUpdate(event, props.data)}
                                             color="primary"
