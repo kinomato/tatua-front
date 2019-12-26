@@ -39,7 +39,6 @@ class ProductDetail extends Component {
 
     render() {
         const { productCT } = this.props; //this.props.productCT
-        console.log(productCT);
         if (productCT !== null) {
             return (
                 // <div>{productCT.map(product => <div>{product.prodName}</div>)}</div>

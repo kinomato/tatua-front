@@ -31,7 +31,9 @@ export class ProductList extends Component {
                 { title: 'Status', field: 'isDeleted' }
 
             ],
-            data: []
+            data: [],
+            _id: '',
+            updateID:''
         }
     }
 
@@ -68,13 +70,12 @@ export class ProductList extends Component {
     componentDidMount() {
         this.fetchProduct();
 
+
     }
     render() {
         const { data } = this.state;
-        const _id = data.map(product => {
-            const { _id } = product;
-        })
-        console.log(_id)
+
+        // console.log(_id)
         if (data.length > 0) {
             return (
                 <div>
@@ -92,10 +93,18 @@ export class ProductList extends Component {
                                     icon: 'update',
                                     tooltip: 'Update Product',
                                     handleAdd: (event, rowData) => {
-                                        console.log(event)
+                                        console.log(rowData._id)
+                                        this.setState({
+                                            _id: rowData._id
+                                        })
+                                        console.log(this.state._id)
                                     },
                                     handleUpdate: (event, rowData) => {
-                                        console.log(event)
+                                        console.log(rowData._id)
+                                        this.setState({
+                                            updateID: rowData._id
+                                        })
+                                        console.log(this.state.updateID)
                                     },
                                     handleDelete: (event, rowData) => {
                                         //alert("You deleted " + rowData.name)
@@ -132,7 +141,7 @@ export class ProductList extends Component {
                                             style={{ textTransform: 'none', color: 'blue' }}
                                             size="small"
                                         >
-                                            <Link to={'/admin/products/editProduct'}><UpdateRoundedIcon /></Link>
+                                            <Link to={`/admin/products/editProduct/${this.state._id}`}><UpdateRoundedIcon /></Link>
 
                                         </IconButton>
                                         <IconButton
