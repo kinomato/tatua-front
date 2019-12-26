@@ -89,9 +89,20 @@ export class ProductList extends Component {
                                         console.log(event)
                                     },
                                     handleDelete: (event, rowData) => {
-                                        this.setState({
-                                            _id: rowData._id
-                                        })
+                                        this.props.deleteProduct(rowData._id)
+                                        console.log(rowData)
+                                        if (rowData.isDeleted === "Good") {
+                                            rowData.isDeleted = "Deleted"
+                                            this.setState({
+                                                isDeleted: rowData.isDeleted
+                                            })
+                                        }
+                                        else {
+                                            rowData.isDeleted = "Good"
+                                            this.setState({
+                                                isDeleted: rowData.isDeleted
+                                            })
+                                        }
                                         
                                     }
                                 }
