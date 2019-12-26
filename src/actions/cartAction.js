@@ -70,8 +70,11 @@ export const decrement = (id, cart) => dispatch => {
     let zero = false;
     newcart.forEach(item => {
         if (item.id === id) {
-            if (item.sl === 1)
-                zero = true;
+            if (item.sl === 1){
+                // zero = true;
+                return;
+            }
+                
             return item.sl--;
         }
     });
