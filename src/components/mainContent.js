@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Row, Col,  Card } from 'react-bootstrap';
+import { Row, Col, Card } from 'react-bootstrap';
 import ControlledCarousel from './carousel';
 import Products from './product/products';
 import InfoUmbreon from './info/infoUmbreon';
 import Cart from './cart/cart';
+import Searchbar from './search/searchbar'
 class MainContent extends Component {
     render() {
         return (
@@ -16,19 +17,32 @@ class MainContent extends Component {
                         <InfoUmbreon />
                     </Col>
                 </Row>
+
                 <Row>
                     <Col sm={9}>
-                        <Card>
+                        {/* <Card>
                             <Card.Header>Trà sữa</Card.Header>
                             <Card.Body>
                                 <Products />
                             </Card.Body>
-                        </Card>
+                        </Card> */}
+                        <Row>
+                            <Col>
+                                <Searchbar />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                            <Products />
+                            </Col>
+                            
+                        </Row>
+
 
                     </Col>
                     <Col>
-                        <Cart/>
-                        
+                        <Cart />
+
                     </Col>
                 </Row>
 

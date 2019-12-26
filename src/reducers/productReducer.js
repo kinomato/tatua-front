@@ -8,6 +8,7 @@ import {
     GET_PRODUCTS_FAIL,
     GET_PRODUCT_FAIL,
     PRODUCTS_LOADING,
+    SEARCH_ORDER,
     // ADD_PRODUCT_FAIL,
     // DELETE_PRODUCT_FAIL,
     // GET_PRODUCTS_COUNT
@@ -15,6 +16,8 @@ import {
 
 const initialState = {
     products: [],
+    productsSearch: [],
+    searchtxt:null,
     productCT: null,
     loading: false,
     count: 0,
@@ -29,7 +32,15 @@ export default function (state = initialState, action) {
                 products: action.payload,
                 loading: false
             }
-
+        case SEARCH_ORDER:
+            return {
+                ...state,
+                productsSearch: [...state.products.filter(item =>{
+                    const newR = (item.prodName.toLocaleLowerCase().includes(action.payload)) ||
+                    (item.prodPrize.toLocaleLowerCase().includes(action.payload))
+                    return newR;
+                })]
+            }
         case GET_PRODUCT:
             return {
                 ...state,

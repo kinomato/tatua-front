@@ -12,7 +12,7 @@ import {
 const initialState = {
 
     cart: [],
-    tongtien: 0,
+    tongtien: 0
 }
 
 export default function (state = initialState, action) {
