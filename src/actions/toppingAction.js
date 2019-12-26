@@ -11,11 +11,12 @@ import {
     CALCULATE_TONGTIEN_TOPP,
     ADD_TOPPING
 } from '../actions/types';
-
+const url_local = process.env.REACT_APP_LOCAL_URL
+const url_host = process.env.REACT_APP_HOST_URL
 export const getToppings = () => (dispatch) => {
     return new Promise((resolve, reject) => {
         dispatch(setToppLoading());
-        axios.get('/api/move/topp')
+        axios.get(`${url_local || url_host}/api/move/topp`)
             .then(res => {
                 dispatch({
                     type: GET_TOPPINGS,
@@ -30,7 +31,7 @@ export const getToppings = () => (dispatch) => {
     })
 }
 export const getTopping = (id) => (dispatch) => {
-    axios.get(`/api/move/topp/${id}`)
+    axios.get(`${url_local || url_host}/api/move/topp/${id}`)
         .then(res => {
             dispatch({
                 type: GET_TOPPING,
@@ -42,7 +43,7 @@ export const getTopping = (id) => (dispatch) => {
         })
 }
 export const addTopping = () => (dispatch) => {
-    axios.post('/api/move/topp/add')
+    axios.post(`${url_local || url_host}/api/move/topp/add`)
         .then(res => {
             dispatch({
                 type: ADD_TOPPING,

@@ -13,11 +13,12 @@ import {
     PRODUCTS_LOADING,
     GET_PRODUCT
 } from '../actions/types';
-
+const url_local = process.env.REACT_APP_LOCAL_URL
+const url_host = process.env.REACT_APP_HOST_URL
 export const getProducts = () => (dispatch) => {
     return new Promise((resolve, reject) => {
         dispatch(setOrderLoading());
-        axios.get('/api/move/product')
+        axios.get(`${url_local || url_host}/api/move/product`)
             .then(res => {
                 console.log("From product action : " + res.data)
                 dispatch({
@@ -34,7 +35,7 @@ export const getProducts = () => (dispatch) => {
 }
 export const getProduct = (id) => (dispatch) => {
     dispatch(setOrderLoading());
-    axios.get(`/api/move/product/${id}`)
+    axios.get(`${url_local || url_host}/api/move/product/${id}`)
         .then(res => {
             dispatch({
                 type: GET_PRODUCT,
@@ -50,7 +51,7 @@ export const getProduct = (id) => (dispatch) => {
 }
 
 export const updateProduct = (id) => (dispatch) => {
-    axios.put(`/api/move/product/update/${id}`)
+    axios.put(`${url_local || url_host}/api/move/product/update/${id}`)
         .then(res => {
             console.log(res);
             dispatch({
@@ -66,7 +67,7 @@ export const updateProduct = (id) => (dispatch) => {
         })
 }
 export const deleteProduct = (id) => (dispatch) => {
-    axios.put(`/api/move/product/delete/${id}`)
+    axios.put(`${url_local || url_host}/api/move/product/delete/${id}`)
         .then(res => {
             console.log(res);
             dispatch({

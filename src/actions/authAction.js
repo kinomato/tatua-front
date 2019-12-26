@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { returnErrors } from './errorAction';
-import { loadUserOrders } from './userAction';
+// import { loadUserOrders } from './userAction';
 import {
     USER_LOADED,
     USER_LOADING,
@@ -11,6 +11,9 @@ import {
     REGISTER_FAIL,
     REGISTER_SUCCESS
 } from '../actions/types';
+
+const url_local = process.env.REACT_APP_LOCAL_URL
+const url_host = process.env.REACT_APP_HOST_URL
 
 // Check token & load user
 export const loadUser = () => (dispatch, getState) => {
@@ -31,13 +34,13 @@ export const loadUser = () => (dispatch, getState) => {
     if (token) {
         config.headers['x-auth-token'] = token;
     }
-    axios.get('/api/move/auth/user', config)
+    axios.get(`${url_local || url_host}/api/move/auth/user`, config)
         .then(res => {
             dispatch({
                 type: USER_LOADED,
                 payload: res.data
             })
-            dispatch(loadUserOrders(res.data.orders))
+            // dispatch(loadUserOrders(res.data.orders))
         })
         .catch(err => {
             console.log(err);
@@ -58,13 +61,13 @@ export const register = ({ userName, userEmail, userPassword, userPhone }) => di
 
     const body = JSON.stringify({ userName, userEmail, userPassword, userPhone });
 
-    axios.post('/api/move/user/register', body, config)
+    axios.post(`${url_local || url_host}/api/move/user/register`, body, config)
         .then(res => {
             dispatch({
                 type: REGISTER_SUCCESS,
                 payload: res.data
             })
-            dispatch(loadUserOrders(res.data.user.orders))
+            // dispatch(loadUserOrders(res.data.user.orders))
         })
         .catch(err => {
             dispatch(returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL'));
@@ -89,13 +92,13 @@ export const login = ({ userEmail, userPassword }) => dispatch => {
 
     const body = JSON.stringify({ userEmail, userPassword });
 
-    axios.post('/api/move/auth/login', body, config)
+    axios.post(`${url_local || url_host}/api/move/auth/login`, body, config)
         .then(res => {
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: res.data
             })
-            dispatch(loadUserOrders(res.data.user.orders))
+            // dispatch(loadUserOrders(res.data.user.orders))
         })
         .catch(err => {
             dispatch(returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL'));

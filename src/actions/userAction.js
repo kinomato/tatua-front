@@ -24,10 +24,11 @@ import {
     LOAD_USER_ORDERS
 
 } from '../actions/types';
-
+const url_local = process.env.REACT_APP_LOCAL_URL
+const url_host = process.env.REACT_APP_HOST_URL
 // Lấy orders
 export const getUsersCount = () => (dispatch) => {
-    axios.get('/api/move/user/get/count')
+    axios.get(`${url_local || url_host}/api/move/user/get/count`)
         .then(res => {
             dispatch({
                 type: GET_USERS_COUNT,
@@ -44,7 +45,7 @@ export const getUsersCount = () => (dispatch) => {
 export const getUsers = () => (dispatch) => {
     return new Promise((resolve, reject) => {
         dispatch(setUserLoading())
-    axios.get('/api/move/user').then(res => {
+    axios.get(`${url_local || url_host}/api/move/user`).then(res => {
         dispatch({
             type: GET_USERS,
             payload: res.data
@@ -63,7 +64,7 @@ export const getUsers = () => (dispatch) => {
         
 }
 export const getUser = (id) => (dispatch) => {
-    axios.get(`/api/move/user/${id}`).then(res => {
+    axios.get(`${url_local || url_host}/api/move/user/${id}`).then(res => {
         dispatch({
             type: GET_USER,
             payload: res.data
@@ -77,7 +78,7 @@ export const getUser = (id) => (dispatch) => {
 }
 
 export const updateUser = (id) => (dispatch) => {
-    axios.put(`/api/move/user/update/${id}`)
+    axios.put(`${url_local || url_host}/api/move/user/update/${id}`)
         .then(res => {
             console.log(res);
             dispatch({
@@ -92,12 +93,12 @@ export const updateUser = (id) => (dispatch) => {
             })
         })
 }
-export const loadUserOrders = (orders) => async dispatch => {
-    dispatch({
-        type:LOAD_USER_ORDERS,
-        payload: orders
-    })
-}
+// export const loadUserOrders = (orders) => async dispatch => {
+//     dispatch({
+//         type:LOAD_USER_ORDERS,
+//         payload: orders
+//     })
+// }
 export const saveOrder =  (orderData,uid) => async dispatch => {
     const config = {
         headers: {
@@ -106,7 +107,7 @@ export const saveOrder =  (orderData,uid) => async dispatch => {
     }
     
     const body = JSON.stringify(orderData);
-    axios.post('http://localhost:8000/api/move/order/saveorder',body,config)
+    axios.post(`${url_local || url_host}/api/move/order/saveorder`,body,config)
     .then(res => {
         dispatch({
             type:SAVE_ORDER

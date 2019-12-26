@@ -14,11 +14,12 @@ import {
     GET_ORDERS_COUNTC,
     GET_ORDER_CHART_DATA
 } from '../actions/types';
-
+const url_local = process.env.REACT_APP_LOCAL_URL
+const url_host = process.env.REACT_APP_HOST_URL
 // Lấy orders
 export const getOrders = () => (dispatch) => {
     dispatch(setOrderLoading());
-    axios.get('/api/move/order')
+    axios.get(`${url_local || url_host}/api/move/order`)
         .then(res => {
             dispatch({
                 type: GET_ORDERS,
@@ -50,7 +51,7 @@ export const getOrder= (id) => (dispatch) => {
         })
 }
 export const getOrdersCount = () => dispatch => {
-    axios.get('/api/move/order/get/count')
+    axios.get(`${url_local || url_host}/api/move/order/get/count`)
         .then(res => {
             dispatch({
                 type: GET_ORDERS_COUNT,
@@ -62,7 +63,7 @@ export const getOrdersCount = () => dispatch => {
         })
 } 
 export const getOrdersCountc = () => dispatch => {
-    axios.get('/api/move/order/get/countc')
+    axios.get(`${url_local || url_host}/api/move/order/get/countc`)
         .then(res => {
             dispatch({
                 type: GET_ORDERS_COUNTC,
@@ -74,7 +75,7 @@ export const getOrdersCountc = () => dispatch => {
         })
 } 
 export const getOrderChartData = () => dispatch => {
-    axios.get('/api/move/order/get/sortcount')
+    axios.get(`${url_local || url_host}/api/move/order/get/sortcount`)
         .then(res=> {
             dispatch({
                 type: GET_ORDER_CHART_DATA,

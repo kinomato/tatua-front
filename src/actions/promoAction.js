@@ -12,11 +12,12 @@ import {
 	DELETE_PROMO,
 	PROMOS_LOADING
 } from '../actions/types';
-
+const url_local = process.env.REACT_APP_LOCAL_URL
+const url_host = process.env.REACT_APP_HOST_URL
 export const getPromos = () => (dispatch) => {
 	return new Promise((resolve, reject) => {
 			dispatch(setPromoLoading());
-			axios.get('/api/move/promo')
+			axios.get(`${url_local || url_host}/api/move/promo`)
 					.then(res => {
 							dispatch({
 									type: GET_PROMOS,
@@ -32,7 +33,7 @@ export const getPromos = () => (dispatch) => {
 }
 
 export const getPromo = (id) => (dispatch) => {
-	axios.get(`/api/move/promo/${id}`)
+	axios.get(`${url_local || url_host}/api/move/promo/${id}`)
 			.then(res => {
 					dispatch({
 							type: GET_PROMO,
