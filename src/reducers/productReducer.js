@@ -36,8 +36,8 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 productsSearch: [...state.products.filter(item =>{
-                    const newR = (item.prodName.toLocaleLowerCase().includes(action.payload)) ||
-                    (item.prodPrize.toLocaleLowerCase().includes(action.payload))
+                    const newR = ((item.prodName.toLocaleLowerCase().includes(action.payload)) ||
+                    (item.prodPrize.toLocaleLowerCase().includes(action.payload)) )
                     return newR;
                 })]
             }

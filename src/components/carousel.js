@@ -43,7 +43,7 @@ export default function ControlledCarousel() {
         <img
           style={{ height: '30rem' }}
           className="item3 w-100"
-          src="https://vinid.net/wp-content/uploads/2019/08/20190820_AppVinID_BannerWeb_MasterTea.jpg"
+          src="https://cdn-www.vinid.net/2019/12/Uong-tra-sua-Tiger-Sugar-Delivery-tha-ga-voi-voucher-dong-gia-23.000-dong.jpg"
           alt="Third slide"
         />
 
